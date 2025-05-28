@@ -7,6 +7,7 @@ Este projeto é uma API desenvolvida em Golang para gerenciar informações de p
 - **Golang**: Linguagem de programação principal.
 - **HTTP Framework**: [Gorilla Mux](https://github.com/gorilla/mux) 
 - **Banco de Dados**: PostgreSQL
+- **ORM: Gorm
 
 ## Endpoints
 ### Exemplos de Endpoints
@@ -32,7 +33,10 @@ Este projeto é uma API desenvolvida em Golang para gerenciar informações de p
    ```
    go mod tidy
    ```
-
+3. Compile todo o projeto em um unico arquivo 
+   ```
+   go build -o api-golang-persons
+   ```
 
 
 ### Reminder
