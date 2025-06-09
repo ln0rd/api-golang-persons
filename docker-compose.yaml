@@ -3,20 +3,10 @@ services:
   postgres:
     image: "postgres"
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root      
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=apigolangpersons      
     ports:
       - "5432:5432"
     volumes:
       - ./migrations/personalities.sql:/docker-entrypoint-initdb.d/personalities.sql   
-
-  # pgadmin-compose:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "email@email.com"
-  #     PGADMIN_DEFAULT_PASSWORD: "123456"
-  #   ports:
-  #     - "54321:80"
-  #   depends_on:
-  #     - postgres

@@ -1,10 +1,10 @@
 create table personalities(
     id serial primary key,
-    nome varchar,
-    historia varchar
+    name varchar,
+    history varchar
 );
 
-INSERT INTO personalities(nome, historia) VALUES
+INSERT INTO personalities(name, history) VALUES
 ('Michael Scott', 'Ele é o gerente regional da filial da Dunder Mifflin em Scranton, uma empresa de papel. Ele é conhecido por seu estilo de liderança excêntrico e muitas vezes ineficaz, mas tem um bom coração e se preocupa com seus funcionários.'),
 ('Dwight Schrute', 'Ele é o assistente do gerente regional e é conhecido por sua personalidade peculiar e suas habilidades de vendas excepcionais. Ele é um grande fã de agricultura e possui uma fazenda de beterrabas.'),
 ('Jim Halpert', 'Ele é um vendedor da Dunder Mifflin e é conhecido por seu senso de humor sarcástico e suas travessuras com Dwight. Ele tem um relacionamento romântico com Pam Beesly.'),

@@ -46,6 +46,9 @@ Init project, to reference the repository with the code
 go mod init github.com/ln0rd/api-golang-persons
 ```
 
+### Libs Installed
 
-
-
+- go get gorm.io/driver/postgres
+- go get github.com/gorilla/mux
+- go get github.com/joho/godotenv
+- go get -u go.uber.org/zap

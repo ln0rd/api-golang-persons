@@ -1,28 +1,83 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	"github.com/ln0rd/api-golang-persons/models"
+	"github.com/ln0rd/api-golang-persons/controllers"
+	"github.com/ln0rd/api-golang-persons/database"
 	"github.com/ln0rd/api-golang-persons/routes"
+	"github.com/ln0rd/api-golang-persons/services"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+)
+
+var (
+	err    error
+	logger *zap.Logger
 )
 
 func main() {
-	err := godotenv.Load()
+	config := zap.NewProductionConfig()
+	if os.Getenv("ENVIRONMENT_LEVEL") == "development" {
+		config.Level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
+	}
+
+	logger, err = config.Build()
 	if err != nil {
-		fmt.Println("Error loading .env file")
+		panic(err)
+	}
+	defer logger.Sync()
+
+	// Tenta carregar o .env e loga o resultado
+	if err := godotenv.Load(); err != nil {
+		logger.Error("Error loading .env file",
+			zap.Error(err),
+			zap.String("current_dir", getCurrentDir()))
+	} else {
+		logger.Info("Successfully loaded .env file")
+		// Log some env vars to verify they were loaded
+		logger.Debug("Environment variables",
+			zap.String("DB_HOST", os.Getenv("DATABASE_HOST")),
+			zap.String("DB_NAME", os.Getenv("DATABASE_NAME")),
+			zap.String("DB_PORT", os.Getenv("DATABASE_PORT")))
 	}
 
 	httpPort := os.Getenv("HTTP_PORT")
-
-	models.Personalities = []models.Personality{
-		{ID: 1, Name: "John Doe", History: "A fictional character often used as a placeholder."},
-		{ID: 2, Name: "Jane Smith", History: "A common name used in various contexts."},
-		{ID: 3, Name: "Alice Johnson", History: "A name often associated with curiosity and adventure."},
+	if httpPort == "" {
+		logger.Warn("HTTP_PORT not set, using default 8080")
+		httpPort = "8080"
 	}
 
-	fmt.Println("Initializing the application...")
-	routes.HandleRequest(httpPort)
+	database.InitDB(logger)
+
+	logger.Info("Initializing the application...")
+	r := mux.NewRouter()
+	rt := routes.NewRoute(logger,
+		controllers.NewPersonalityController(
+			services.NewPersonalityService(database.DB, logger),
+			logger))
+
+	rt.SetupRoutes(r)
+
+	logger.Info("Server starting", zap.String("port", httpPort))
+	log.Fatal(http.ListenAndServe(":"+httpPort, r))
 }
+
+func getCurrentDir() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "error getting current dir"
+	}
+	return dir
+}
+
+// func setHeaders(w http.ResponseWriter) {
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.Header().Set("Access-Control-Allow-Origin", "*")
+// 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+// 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+// }
