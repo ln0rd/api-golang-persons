@@ -52,3 +52,4 @@ go mod init github.com/ln0rd/api-golang-persons
 - go get github.com/gorilla/mux
 - go get github.com/joho/godotenv
 - go get -u go.uber.org/zap
+- go get github.com/gorilla/handlers // Cors configuration

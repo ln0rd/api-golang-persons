@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/ln0rd/api-golang-persons/controllers"
@@ -64,7 +65,8 @@ func main() {
 	rt.SetupRoutes(r)
 
 	logger.Info("Server starting", zap.String("port", httpPort))
-	log.Fatal(http.ListenAndServe(":"+httpPort, r))
+	// log.Fatal(http.ListenAndServe(":"+httpPort, handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:3000"}))(r)))
+	log.Fatal(http.ListenAndServe(":"+httpPort, handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
 
 func getCurrentDir() string {
@@ -74,10 +76,3 @@ func getCurrentDir() string {
 	}
 	return dir
 }
-
-// func setHeaders(w http.ResponseWriter) {
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.Header().Set("Access-Control-Allow-Origin", "*")
-// 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-// 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-// }
