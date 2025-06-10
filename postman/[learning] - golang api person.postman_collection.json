@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "796da09a-50d6-475f-84a4-2d1311267ddd",
+		"name": "[learning] - golang api person",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35329244"
+	},
+	"item": [
+		{
+			"name": "/home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000",
+					"host": [
+						"localhost"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/personalities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/personalities",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"personalities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/personalities/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/personalities/10",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"personalities",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/personalities/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Leon Kennedy\",\n    \"history\": \"History Resident Evil 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/personalities",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"personalities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/personalities/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 13,\n    \"name\": \"Chris Redfield\",\n    \"history\": \"Resident Evil 5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/personalities/10",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"personalities",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/personalities/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Testing leo\",\n    \"history\": \"History testing 3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/personalities/11",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"personalities",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
